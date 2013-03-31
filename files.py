@@ -18,6 +18,7 @@ def get_max_fuzz_ratio(input_location, output_locations):
 		for (path, dirs, files) in os.walk(output_location):
 			for direct in dirs :
 				direct_string = re.sub('\[(.*?)\]|\(.*?\)', '', direct)
+				direct_string = re.sub('_|\.', ' ', direct_string)
 				matches = string_match(text_string, direct_string)
 				if matches > folder_ratio and maximize[0] < matches: # partial_ratio
 					#print "Partial Ratio\t\t\t\t", string_match(text_string, direct_string), text_string, direct_string

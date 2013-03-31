@@ -1,11 +1,3 @@
-# stree - String tree
-#
-#
-#
-#
-#
-#
-#
 import math
 
 def chrildren(index):
@@ -23,7 +15,7 @@ def chrildren(index):
 
 def get_level(index):
 	return int(math.floor((math.sqrt(8 * index + 1) - 1) / 2) + 1)
-	# It works from a derivation from the Quadratic equasion thanks Parrent5656
+	# It works from a derivation from the Quadratic equasion
 
 def parrents(index):
 	if index == 1:
@@ -52,62 +44,6 @@ def generate_string(string):
 		length -=1
 		start=0
 	return ret
-
-class stree:
-
-	def __init__(self, strees=None):
-		self.stree = []
-		if strees != None:
-			self.stree = strees
-		self.string = ''
-		self.remove_queue = set()
-
-	def generate_string(self, string):
-		self.string = string
-		start =0
-		length = len(string)
-		end = len(string)
-		while length >= 1:
-			while start+length <= end:
-				self.stree.append(string[start:start+length])
-				start +=1
-			length -=1
-			start=0
-
-	def del_queue(self):
-		#print sorted(self.remove_queue, reverse=True)
-		for x in sorted(self.remove_queue, reverse=True):
-			#print x, self.stree[x]
-			del self.stree[x]
-		#print self.stree
-
-	def remove_down(self, index):
-		ch = chrildren(index)
-
-		
-		for x in ch:
-			if x < len(self.stree):
-				if self.stree[x] in ['or', 'rl', 'W', 'o', 'r', 'l', 'd']:
-					pass#print index
-				self.remove_down(x)
-				self.remove_queue.add(x)
-
-	def remove_up(self, index):
-		pr = parrents(index)
-		if pr == None:
-			return
-
-		for x in pr:
-			if x > -1:
-				self.remove_up(x)
-				self.remove_queue.add(x)
-
-	def __len__(self):
-		return len(self.stree)
-
-	def string_list(self, stree):
-		for num, x in enumerate(self.stree):
-			print num , x
 
 def string_match(string1, string2):
 	match1 = generate_string(string1)
