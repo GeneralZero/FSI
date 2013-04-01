@@ -9,4 +9,5 @@ This is a python file for matching strings biased on the index of their match.
 ##Example##
 `Usage: ./files.py (search location) [destination locations]`
 
-`Usage: ./files.py ~/ [destination locations]`
+`Usage: ./files.py /home/user/Downloads /home/user/movies`
+`Usage: ./files.py /home/user/Downloads /home/user/movies /home/user/music /home/user/pictures`
