@@ -1,6 +1,9 @@
+#!/usr/bin/env python
 import subprocess as sub
 import re
+import sys
 import os
+import shutil
 from stree import *
 
 folder_ratio = 40
@@ -26,11 +29,18 @@ def get_max_fuzz_ratio(input_location, output_locations):
 					maximize = [matches, os.path.join(path, direct)]
 	if maximize != [0]:
 		return maximize
-	return None
+	return [None, None]
 
-loc = ['/media/Server_RAID_5/tv', '/media/Server_RAID_5/anime']
+if __name__ == '__main__':
+	if len(sys.argv) < 3:
+		print "Usage: %s (search location) [destination locations]" % sys.argv[0]
+		exit(-1)
+	loc = sys.argv[2:]
 
-for files in os.listdir('/home/generalzero/Downloads/torrents/'):
-	print files
-	print get_max_fuzz_ratio(files, loc)
-	print 
+	for files in os.listdir(sys.argv[1]):
+		rating, dest = get_max_fuzz_ratio(files, loc)
+		if rating != None:
+			print "\033[92mMoving %s %s \033[0m" % (sys.argv[1]+files,  dest)
+			shutil.move(sys.argv[1]+files, dest)
+		else:
+			print '\033[91m' + "Cant find a folder for %s \033[0m" % files
