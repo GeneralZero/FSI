@@ -35,12 +35,20 @@ if __name__ == '__main__':
 	if len(sys.argv) < 3:
 		print "Usage: %s (search location) [destination locations]" % sys.argv[0]
 		exit(-1)
-	loc = sys.argv[2:]
+	loc = [(lambda default, input: default if not os.path.isabs(sys.argv[1]) else input)(re.sub(r'~', os.environ['HOME'], s), os.path.abspath(re.sub(r'~', os.environ['HOME'], s))) for s in sys.argv[2:]]
+	src_path = (lambda default, input: default if not os.path.isabs(sys.argv[1]) else input)(re.sub(r'~', os.environ['HOME'], sys.argv[1]), os.path.abspath(re.sub(r'~', os.environ['HOME'], sys.argv[1])))
+	#Changes input to absolute directories and deals with ~ to home directory
+	print src_path, os.path.exists(src_path)
+	for s in loc:
+		print s, os.path.exists(s)
 
-	for files in os.listdir(sys.argv[1]):
+	
+'''
+	for files in os.listdir(os.path.abspath(sys.argv[1])):
 		rating, dest = get_max_fuzz_ratio(files, loc)
 		if rating != None:
-			print "\033[92mMoving %s %s \033[0m" % (sys.argv[1]+files,  dest)
+			print "\033[92m" + "Moving %s %s \033[0m" % (sys.argv[1]+files,  dest)
 			shutil.move(sys.argv[1]+files, dest)
 		else:
 			print '\033[91m' + "Cant find a folder for %s \033[0m" % files
+'''
